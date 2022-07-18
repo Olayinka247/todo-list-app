@@ -16,10 +16,15 @@ const HomePage = () => {
         </header>
         <Row>
           <Col md={7}>
-            <MySideBar setInput={setInput} />
+            <MySideBar
+              setInput={setInput}
+              input={input}
+              todos={todos}
+              setTodos={setTodos}
+            />
           </Col>
           <Col md={5}>
-            <TodoList />
+            <TodoList todos={todos} setTodos={setTodos} />
           </Col>
         </Row>
       </Container>

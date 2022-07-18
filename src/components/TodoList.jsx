@@ -1,10 +1,13 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
+import Todo from "./Todo";
 
-const TodoList = () => {
+const TodoList = ({ todos, setTodos }) => {
   return (
     <ListGroup>
-      <ListGroup.Item>Cras justo odio</ListGroup.Item>
+      {todos.map((todo) => (
+        <Todo key={todo.id} todo={todo} setTodos={setTodos} todos={todos} />
+      ))}
     </ListGroup>
   );
 };

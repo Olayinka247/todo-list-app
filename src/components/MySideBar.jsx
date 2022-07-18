@@ -1,22 +1,31 @@
 import React from "react";
 import { MdAdd } from "react-icons/md";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
-const MySideBar = ({ setInput }) => {
+const MySideBar = ({ setInput, setTodos, todos, input }) => {
   const inputHandler = (e) => {
     setInput(e.target.value);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTodos([...todos, { text: input, completed: false, id: uuidv4() }]);
+    setInput("");
+  };
+
   return (
     <Container>
       <Row>
         <Col md={8}>
           <div className="d-flex ">
             <input
+              value={input}
               onChange={inputHandler}
               type="text"
               className="form-control"
             />
-            <Button variant="dark">
+            <Button onClick={handleSubmit} variant="dark">
               <MdAdd size={20} />
             </Button>
           </div>

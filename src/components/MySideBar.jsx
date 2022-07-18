@@ -3,7 +3,7 @@ import { MdAdd } from "react-icons/md";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
-const MySideBar = ({ setInput, setTodos, todos, input }) => {
+const MySideBar = ({ setInput, setTodos, todos, input, setTodoStatus }) => {
   const inputHandler = (e) => {
     setInput(e.target.value);
   };
@@ -12,6 +12,10 @@ const MySideBar = ({ setInput, setTodos, todos, input }) => {
     e.preventDefault();
     setTodos([...todos, { text: input, completed: false, id: uuidv4() }]);
     setInput("");
+  };
+
+  const handleStatus = (e) => {
+    setTodoStatus(e.target.value);
   };
 
   return (
@@ -33,7 +37,7 @@ const MySideBar = ({ setInput, setTodos, todos, input }) => {
 
         <Col md={3}>
           <div>
-            <select className="form-control">
+            <select onChange={handleStatus} className="form-control">
               <option value="all">All</option>
               <option value="completed">Completed</option>
               <option value="uncompleted">Uncompleted</option>

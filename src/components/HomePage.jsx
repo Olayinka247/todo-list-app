@@ -11,8 +11,13 @@ const HomePage = () => {
   const [todoFilter, setTodoFilter] = useState([]);
 
   useEffect(() => {
+    getTodos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     filterTodos();
-    console.log("THIS IS THE FILTERED TODOS: ", filterTodos());
+    saveTodos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todos, todoStatus]);
 
@@ -30,14 +35,31 @@ const HomePage = () => {
     }
   };
 
+  const saveTodos = () => {
+    // saving and todo to local storage and pushing to the state
+    localStorage.setItem("todos", JSON.stringify(todos));
+  };
+
+  const getTodos = () => {
+    // run a check to see if there is anything in local storage
+    if (localStorage.getItem("todos") === null) {
+      // setting it to an empty array
+      localStorage.setItem("todos", JSON.stringify([]));
+    } else {
+      // if we do have something get what we have and push it to the state
+      let localSavedTodos = JSON.parse(localStorage.getItem("todos"));
+      setTodos(localSavedTodos);
+    }
+  };
+
   return (
     <div>
       <Container>
         <header className="text-white">
-          <h1>TO-DO List</h1>
+          <h1 className="text-center mb-3">TO-DO List</h1>
         </header>
         <Row>
-          <Col md={7}>
+          <Col md={6}>
             <MySideBar
               setInput={setInput}
               input={input}
@@ -46,7 +68,10 @@ const HomePage = () => {
               setTodoStatus={setTodoStatus}
             />
           </Col>
-          <Col md={5}>
+          <div
+            style={{ borderRight: "3px solid #c4c4c4", height: "100vh" }}
+          ></div>
+          <Col md={4}>
             <TodoList
               todos={todos}
               setTodos={setTodos}
@@ -55,6 +80,10 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
+      {/* // create a footer */}
+      <footer className="text-white text-center">
+        <p> Copyright Boldcodes &copy; {new Date().getFullYear()} </p>
+      </footer>
     </div>
   );
 };
